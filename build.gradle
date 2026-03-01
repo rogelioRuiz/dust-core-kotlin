@@ -1,8 +1,7 @@
 plugins {
     id 'java-library'
     id 'org.jetbrains.kotlin.jvm'
-    id 'maven-publish'
-    id 'signing'
+    id 'net.thebugmc.gradle.sonatype-central-portal-publisher' version '1.2.4'
 }
 
 group = 'io.t6x.dust'
@@ -35,50 +34,31 @@ test {
     useJUnit()
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId = project.group
-            artifactId = 'dust-core'
-            version = project.version
-            from components.java
+centralPortal {
+    username = findProperty('centralPortal.username') ?: ''
+    password = findProperty('centralPortal.password') ?: ''
 
-            pom {
-                name = 'dust-core-kotlin'
-                description = 'DustCore contract types and interfaces for on-device ML — pure Kotlin/JVM'
-                url = 'https://github.com/rogelioRuiz/dust-core-kotlin'
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 't6x'
-                        name = 'T6X'
-                        email = 'dev@t6x.io'
-                    }
-                }
-                scm {
-                    connection = 'scm:git:git://github.com/rogelioRuiz/dust-core-kotlin.git'
-                    developerConnection = 'scm:git:ssh://github.com/rogelioRuiz/dust-core-kotlin.git'
-                    url = 'https://github.com/rogelioRuiz/dust-core-kotlin'
-                }
+    pom {
+        name = 'dust-core'
+        description = 'DustCore contract types and interfaces for on-device ML — pure Kotlin/JVM'
+        url = 'https://github.com/rogelioRuiz/dust-core-kotlin'
+        licenses {
+            license {
+                name = 'The Apache License, Version 2.0'
+                url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
             }
         }
-    }
-
-    repositories {
-        maven {
-            name = 'sonatype'
-            url = version.toString().endsWith('SNAPSHOT')
-                ? 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
-                : 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
-            credentials {
-                username = findProperty('ossrhUsername') ?: ''
-                password = findProperty('ossrhPassword') ?: ''
+        developers {
+            developer {
+                id = 't6x'
+                name = 'T6X'
+                email = 'dev@t6x.io'
             }
+        }
+        scm {
+            connection = 'scm:git:git://github.com/rogelioRuiz/dust-core-kotlin.git'
+            developerConnection = 'scm:git:ssh://github.com/rogelioRuiz/dust-core-kotlin.git'
+            url = 'https://github.com/rogelioRuiz/dust-core-kotlin'
         }
     }
 }
