@@ -1,0 +1,88 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+    id 'maven-publish'
+    id 'signing'
+}
+
+group = 'io.t6x.dust'
+version = file('VERSION').text.trim()
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    withSourcesJar()
+    withJavadocJar()
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+test {
+    useJUnit()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = project.group
+            artifactId = 'dust-core'
+            version = project.version
+            from components.java
+
+            pom {
+                name = 'dust-core-kotlin'
+                description = 'DustCore contract types and interfaces for on-device ML — pure Kotlin/JVM'
+                url = 'https://github.com/rogelioRuiz/dust-core-kotlin'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 't6x'
+                        name = 'T6X'
+                        email = 'dev@t6x.io'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/rogelioRuiz/dust-core-kotlin.git'
+                    developerConnection = 'scm:git:ssh://github.com/rogelioRuiz/dust-core-kotlin.git'
+                    url = 'https://github.com/rogelioRuiz/dust-core-kotlin'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'sonatype'
+            url = version.toString().endsWith('SNAPSHOT')
+                ? 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+                : 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            credentials {
+                username = findProperty('ossrhUsername') ?: ''
+                password = findProperty('ossrhPassword') ?: ''
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications
+}
