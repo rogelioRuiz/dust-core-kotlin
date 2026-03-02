@@ -13,6 +13,7 @@
   <img alt="Maven" src="https://img.shields.io/badge/Maven-io.t6x.dust%3Adust--core-blue">
   <a href="https://kotlinlang.org"><img alt="Kotlin" src="https://img.shields.io/badge/Kotlin-2.1-purple.svg"></a>
   <a href="https://openjdk.org"><img alt="JVM" src="https://img.shields.io/badge/JVM-17+-orange.svg"></a>
+  <a href="https://github.com/rogelioRuiz/dust-core-kotlin/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/rogelioRuiz/dust-core-kotlin/actions/workflows/ci.yml/badge.svg?branch=main"></a>
 </p>
 
 ---
