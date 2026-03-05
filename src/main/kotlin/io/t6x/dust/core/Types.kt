@@ -23,6 +23,7 @@ enum class ModelFormat(val value: String) {
     COREML("coreml"),
     TFLITE("tflite"),
     GGUF("gguf"),
+    MLX("mlx"),
     CUSTOM("custom");
 
     companion object {
